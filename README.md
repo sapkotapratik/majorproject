@@ -7,4 +7,4 @@ Team Members:
 3. nAyAn rIjAl
 4. Pratik Sapkota
 
-This group PNAD spell as "nad" where P is silent but killer.
+This is group PNAD spell as "nad" where P is silent but killer.
