@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sentiment Analyser System</title>
+  <meta charset="utf-8">      
+  <!-- import plugin script -->   
+  <!-- <script src="static/Chart.min.js"></script> -->
+  <script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Sentiment Analysis</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/overallreport">Report</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <h1>Sentiment Report </h1>
+  <hr>
+  {% if(movie) %}
+  <h2>Report For Movie : {{ movie }}</h2>
+  {% else%}
+  <h2>Overall Report For Movie </h2>
+  {% endif%}
+  <!-- bar chart canvas element -->
+  <canvas id="chart" width="600" height="400"></canvas>
+  <script>
+     
+     var randomColorGenerator = function () { 
+         return '#' + (Math.random().toString(16) + '0000000').slice(2, 8); 
+     };
+
+     var barData = {
+     labels : ["Negative", "Somewhat Negative", "Neutral", "Somewhat Positive","Positive"],
+     //labels : {{ labels }},
+     datasets : [
+        {
+          label: "My First dataset",
+          
+          fillColor: ["yellow", "navy", "red", "orange", 'cyan'],
+        
+          strokeColor:  ["rgba(220,220,220,0.5)", "navy", "red", "orange", 'cyan'],
+          highlightFill:  ["rgba(220,220,220,0.5)", "navy", "red", "orange", 'cyan'],
+          highlightStroke:  ["rgba(220,220,220,0.5)", "navy", "red", "orange", 'cyan'],
+          data : {{ values }}
+        }
+        ]
+     }
+    // get bar chart canvas
+     var mychart = document.getElementById("chart").getContext("2d");
+     steps = 10
+     max = 10
+     // draw bar chart<br />
+     new Chart(mychart).Bar(barData, {
+          scaleOverride: true,
+          scaleSteps: steps,
+          scaleStepWidth: Math.ceil(max / steps),
+          scaleStartValue: 0,
+          scaleShowVerticalLines: true,
+          scaleShowGridLines : true,
+          barShowStroke : true,
+          scaleShowLabels: true
+     });
+  </script>
+
+</body>
+</html>

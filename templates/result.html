@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>परिणाम पृष्ठ</title>
+	<meta charset="utf-8">      
+	<!-- import plugin script -->   
+	<!-- <script src="{{ url_for('static', filename='Chart.min.js') }}"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h3 class="text text-success">परिणाम</h3>
+			<hr>
+			<div class="header">
+				
+				<h3> 
+					तपाईंको नेपाली समाचार: {{string_input}}</h3>
+			</div>
+		</div>
+		<hr>
+		<!-- <h2>Our Model Predicted Class of {{ result }} </h2> -->
+		<h2 style="text-align: center;">तपाईंको समाचार</h2> <br>
+		
+		<div style="text-align: center; color:#d06800;">
+			<span style='font-size:150px;'>{{result}}</span>
+		</div>
+		<br>
+		<h2 style="text-align: center;">सम्बन्धी हुन सक्छ |</h2> <br>
+		<div class="confidence">
+			<!-- <canvas id="chart" width="600" height="400"></canvas> -->
+			    <script>
+			      var pieData = [
+			        {% for item, label, colors in set %}
+			          {
+			            value: {{item}},
+			            label: "{{label}}",
+			            color : "{{colors}}"
+			          },
+			        {% endfor %}
+			      ];
+			      // get bar chart canvas
+			      var mychart = document.getElementById("chart").getContext("2d");
+			      steps = 10
+			      max = {{ max }}
+			      // draw pie chart
+			      new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
+			    </script>
+		</div>
+	<!--	<a href="/report/{{ movie }}" class="btn btn-danger"> Goto Report</a>-->
+	</div>
+
+
+	<hr>
+</body>
+</html>
