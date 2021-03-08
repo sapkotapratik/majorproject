@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/majorproject/majorproject/app.py", line 42, in <module>
+    with open('mysaved_md_svc_smote', 'rb') as file:
+FileNotFoundError: [Errno 2] No such file or directory: 'mysaved_md_svc_smote'

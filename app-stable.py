@@ -61,14 +61,8 @@ def makeprediction():
 
 @app.route("/news", methods=["GET"])
 def news():
-    filter_cat = request.args.get('category')
-
     cur = mysql.connection.cursor()
-    if (filter_cat and filter_cat != ""):
-        cur.execute("SELECT * FROM nepali_news where ground_truth=predicted and ground_truth=%s", [filter_cat])
-    else:
-        cur.execute("SELECT * FROM nepali_news where ground_truth=predicted")
-    
+    cur.execute("SELECT * FROM nepali_news where ground_truth=predicted")
     news = cur.fetchall()
     badge_color_map = {
         'health': 'badge-success',
